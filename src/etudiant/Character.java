@@ -13,8 +13,7 @@ public class Character {
     private int vie;
     private int attackDamage;
     
-    public void Character(String name,int vie,int attackDamage){
-        
+    public Character(String name,int vie,int attackDamage){
         this.name = name;
         this.vie = vie;
         this.attackDamage = attackDamage;
@@ -70,6 +69,9 @@ class Warrior extends Character implements SpecialAbility{
         Target.setVie(Target.getVie() - 30);
     }
     
+     public Warrior(String name,int vie,int attackDamage){
+        super(name, vie, attackDamage);
+    }
     
     @Override
     public void use (Character Target){
@@ -87,6 +89,10 @@ class Mage extends Character implements SpecialAbility{
         Target.setVie(Target.getVie() - 25);
     }
     
+    public Mage(String name,int vie,int attackDamage){
+        super(name, vie, attackDamage);
+    }
+    
     @Override
     public void use(Character Target){
         int loss;
@@ -102,6 +108,10 @@ class Mage extends Character implements SpecialAbility{
 class Monster extends Character implements SpecialAbility{
     void ATTACK (Character Target){
         Target.setVie(Target.getVie() - 25);
+    }
+    
+     public Monster(String name,int vie,int attackDamage){
+        super(name, vie, attackDamage);
     }
     
     @Override

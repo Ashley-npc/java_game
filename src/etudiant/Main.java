@@ -8,9 +8,30 @@ import java.util.HashMap;
 
 public class Main {
     
-    public static void main (String[] args){
-        Random random = new Random();
+    
+    public static void playerTurn(Character selected,Character opponent){
         Scanner scanner =new Scanner(System.in);
+        System.out.println("Choose your action");
+        System.out.println("1. Attack");
+        System.out.println("2. Heal");
+        System.out.println("3. Heavy attack(usable only once)");
+        
+        int choice = scanner.nextInt();
+        
+        switch (choice){
+            case 1 -> {selected.attack(opponent);break;}
+            case 2 -> {selected.heal();break;}
+            case 3 -> {if(selected instanceof SpecialAbility ability) ability.use(opponent);break;}
+            
+            default -> {System.out.println("Invalid choice");break;}
+        } 
+        
+    }
+    
+    public static void main (String[] args){
+        Scanner scanner =new Scanner(System.in);
+        Random random = new Random();
+        
         Map<String, Character> characters = new HashMap<>();
         
         
@@ -45,17 +66,23 @@ public class Main {
         Character opponent = characters.get(choice2);
         Character selected = characters.get(choice1);
         
-       
-        while (selected.isAlive() || opponent.isAlive()){ 
+        System.out.println("you deliver the first strike");
+        
+        while (selected.isAlive() && opponent.isAlive()){ 
+            
+            playerTurn(selected,opponent);
             
             if (opponent.isAlive()){
                 if (random.nextInt(100)>10 && random.nextInt(100)<30 ){
                     mage.heal();
                 }
                 else if (random.nextInt(100)< 10)
-                    opponent.use (selected);
+                    if (opponent instanceof SpecialAbility ability){
+                        ability.use(selected);
+                    }
+                    
                 else
-                    mage.attack(warrior);
+                    opponent.attack(selected);
             }
             else{
                 System.out.printf("%s won", warrior.getName());
