@@ -78,13 +78,10 @@ public class Main {
                 if (random.nextInt(100)>10 && random.nextInt(100)<30 ){
                     opponent.heal();
                 }
-                else if (random.nextInt(100)< 10)
-                    if (opponent instanceof SpecialAbility ability){
+                else if (random.nextInt(100)< 10 && opponent instanceof SpecialAbility ability)
                         ability.use(selected);
-                    }
-                    
-                else
-                    opponent.attack(selected);
+                    else{
+                        opponent.attack(selected);}
             }
             else{
                 System.out.printf("%s won", warrior.getName());
