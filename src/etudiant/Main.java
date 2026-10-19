@@ -10,22 +10,25 @@ public class Main {
     
     
     public static void playerTurn(Character selected,Character opponent){
-        Scanner scanner =new Scanner(System.in);
-        System.out.println("Choose your action");
-        System.out.println("1. Attack");
-        System.out.println("2. Heal");
-        System.out.println("3. Heavy attack(usable only once)");
-        
-        int choice = scanner.nextInt();
-        
-        switch (choice){
-            case 1 -> {selected.attack(opponent);break;}
-            case 2 -> {selected.heal();break;}
-            case 3 -> {if(selected instanceof SpecialAbility ability) ability.use(opponent);break;}
+        int choice;
+        do{
             
-            default -> {System.out.println("Invalid choice");break;}
-        } 
+            Scanner scanner =new Scanner(System.in);
+            System.out.println("Choose your action");
+            System.out.println("1. Attack");
+            System.out.println("2. Heal");
+            System.out.println("3. Heavy attack(usable only once)");
         
+        
+            choice = scanner.nextInt();
+            switch (choice){
+                case 1 -> {selected.attack(opponent);break;}
+                case 2 -> {selected.heal();break;}
+                case 3 -> {if(selected instanceof SpecialAbility ability) ability.use(opponent);break;}
+            
+                default -> {System.out.println("Invalid choice");break;}
+            } 
+        }while (0>choice || choice>3);
     }
     
     public static void main (String[] args){
@@ -33,8 +36,6 @@ public class Main {
         Random random = new Random();
         Scanner scanner =new Scanner(System.in);
         Map<String, Character> characters = new HashMap<>();
-        
-        
         
         String name1 = "knight";int vie1 = 100;int Damage1 = 20;
         String name2 = "mage";int vie2 = 100; int Damage2 = 20;
@@ -47,7 +48,6 @@ public class Main {
         characters.put("knight",warrior);
         characters.put("mage", mage);
         characters.put("goblin",monster);
-        
         
         System.out.println("Choose a character");
         System.out.println("------------------");
