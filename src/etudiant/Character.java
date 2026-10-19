@@ -65,7 +65,6 @@ public class Character {
 
 class Warrior extends Character implements SpecialAbility{
     void heavyAttack(Character Target){
-        
         Target.setVie(Target.getVie() - 30);
     }
     
@@ -77,7 +76,7 @@ class Warrior extends Character implements SpecialAbility{
     public void use (Character Target){
         int loss;
         System.out.printf("HEAVY ATTACK! on %s\n",Target.getName());
-        if(Target.getVie()<30) {loss = 100 - (100 - Target.getVie());}
+        if(Target.getVie()<30) {loss = 100 - (100 - 30);}
         else {loss = 30;}
         heavyAttack(Target); 
         System.out.printf("%s loses %dhp\n\n\n", Target.getName(),loss);

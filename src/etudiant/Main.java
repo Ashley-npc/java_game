@@ -49,14 +49,16 @@ public class Main {
         characters.put("goblin",monster);
         
         
-        System.out.println("Choose a character\n");
+        System.out.println("Choose a character");
+        System.out.println("------------------");
         for (String name : characters.keySet()){
             System.out.println(name);
         }
         String choice1 = scanner.nextLine();
         
         
-        System.out.println("Choose an oppoenent");
+        System.out.println("\nChoose an oppoenent");
+        System.out.println("-------------------");
         for (String name : characters.keySet()){
             if (!name.equals(choice1))
                 System.out.println(name);
@@ -67,14 +69,14 @@ public class Main {
         Character selected = characters.get(choice1);
         
         System.out.println("\nyou deliver the first strike");
-        System.out.println("----------------------------\n");
+        System.out.println("----------------------------");
         while (selected.isAlive() && opponent.isAlive()){ 
             
             playerTurn(selected,opponent);
             
             if (opponent.isAlive()){
                 if (random.nextInt(100)>10 && random.nextInt(100)<30 ){
-                    mage.heal();
+                    opponent.heal();
                 }
                 else if (random.nextInt(100)< 10)
                     if (opponent instanceof SpecialAbility ability){
