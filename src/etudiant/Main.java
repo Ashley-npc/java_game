@@ -29,9 +29,9 @@ public class Main {
     }
     
     public static void main (String[] args){
-        Scanner scanner =new Scanner(System.in);
-        Random random = new Random();
         
+        Random random = new Random();
+        Scanner scanner =new Scanner(System.in);
         Map<String, Character> characters = new HashMap<>();
         
         
@@ -66,8 +66,8 @@ public class Main {
         Character opponent = characters.get(choice2);
         Character selected = characters.get(choice1);
         
-        System.out.println("you deliver the first strike");
-        
+        System.out.println("\nyou deliver the first strike");
+        System.out.println("----------------------------\n");
         while (selected.isAlive() && opponent.isAlive()){ 
             
             playerTurn(selected,opponent);
