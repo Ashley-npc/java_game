@@ -1,12 +1,56 @@
 
 package etudiant;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Map;
-import java.util.HashMap;
 
 public class Main {
+    
+    
+    public static Character stock(){
+        Scanner scanner = new Scanner(System.in);
+        
+        String name1 = "knight";int vie1 = 100;int Damage1 = 20;
+        String name2 = "mage";int vie2 = 100; int Damage2 = 20;
+        String name3 = "goblin";int vie3 = 60; int Damage3 = 15;
+        String name4 = "elf";int vie4 = 100; int Damage4 = 15;
+        
+        Character warrior = new Warrior(name1,vie1,Damage1);
+        Character mage = new Mage(name2,vie2,Damage2);
+        Character monster = new Monster(name3,vie3,Damage3);
+        Character elf = new Elf (name4,vie4,Damage4);
+        
+        ArrayList<Character> party = new ArrayList<>();
+        party.add(warrior);
+        party.add(mage);
+        party.add(monster);
+        party.add(elf);
+        
+        int i = 0;
+        Character persoChoisi = null;
+        do{
+            i=0;
+            System.out.println("Choose a character");
+            System.out.println("------------------");
+            for (Character perso : party){
+                System.out.println("-"+perso.getName()+"  "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
+            
+            }
+            
+            String choice1 = scanner.nextLine();
+            for (Character perso : party){
+                if (perso.getName().equals(choice1)){
+                    System.out.println("you have chosen "+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
+                    persoChoisi = perso;
+                    break;
+                }
+                i++;
+            }
+            if (i == party.size()) System.out.println("->Invalid choice");
+        }while(i == party.size());
+        return persoChoisi;
+    }
     
     
     public static void playerTurn(Character selected,Character opponent){
@@ -18,6 +62,7 @@ public class Main {
             System.out.println("1. Attack");
             System.out.println("2. Heal");
             System.out.println("3. Heavy attack(usable only once)");
+            System.out.println("4. Switch character");
         
         
             choice = scanner.nextInt();
@@ -25,39 +70,28 @@ public class Main {
                 case 1 -> {selected.attack(opponent);break;}
                 case 2 -> {selected.heal();break;}
                 case 3 -> {if(selected instanceof SpecialAbility ability) ability.use(opponent);break;}
+                case 4 -> {stock();}
             
                 default -> {System.out.println("Invalid choice");break;}
             } 
         }while (0>choice || choice>3);
     }
     
+    
+    
     public static void main (String[] args){
         
         Random random = new Random();
         Scanner scanner =new Scanner(System.in);
-        Map<String, Character> characters = new HashMap<>();
+        System.out.println("/////  BOSS  FIGHT  \\\\\\\\");
+        Character selected = stock();
+        Character opponent = new Boss("UNDEAD", 300, 50);
+
+    
+
+
         
-        String name1 = "knight";int vie1 = 100;int Damage1 = 20;
-        String name2 = "mage";int vie2 = 100; int Damage2 = 20;
-        String name3 = "goblin";int vie3 = 60; int Damage3 = 15;
-        
-        Character warrior = new Warrior(name1,vie1,Damage1);
-        Character mage = new Mage(name2,vie2,Damage2);
-        Character monster = new Monster(name3,vie3,Damage3);
-        
-        characters.put("knight",warrior);
-        characters.put("mage", mage);
-        characters.put("goblin",monster);
-        
-        System.out.println("Choose a character");
-        System.out.println("------------------");
-        for (String name : characters.keySet()){
-            System.out.println(name);
-        }
-        String choice1 = scanner.nextLine();
-        
-        
-        System.out.println("\nChoose an oppoenent");
+        /*System.out.println("\nChoose an oppoenent");
         System.out.println("-------------------");
         for (String name : characters.keySet()){
             if (!name.equals(choice1))
@@ -67,12 +101,12 @@ public class Main {
         
         Character opponent = characters.get(choice2);
         Character selected = characters.get(choice1);
-        
+        */
         System.out.println("\nyou deliver the first strike");
         System.out.println("----------------------------");
-        while (selected.isAlive() && opponent.isAlive()){ 
-            
-            playerTurn(selected,opponent);
+        while (selected.isAlive() || opponent.isAlive()){ 
+            if (selected.isAlive())playerTurn(selected,opponent);
+            else System.out.println("******** YOU LOST ********");
             
             if (opponent.isAlive()){
                 if (random.nextInt(100)>10 && random.nextInt(100)<30 ){
@@ -80,17 +114,17 @@ public class Main {
                 }
                 else if (random.nextInt(100)< 10 && opponent instanceof SpecialAbility ability)
                         ability.use(selected);
-                    else{
-                        opponent.attack(selected);}
+                    else{opponent.attack(selected);}
             }
             else{
-                System.out.printf("%s won", warrior.getName());
+                System.out.printf("******** YOU  WON ********");
                 break;
             }
             
         }   
         
-        
-        
     }
 }
+
+
+
