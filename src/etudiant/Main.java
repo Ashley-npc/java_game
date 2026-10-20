@@ -4,12 +4,11 @@ package etudiant;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.List;
 
 public class Main {
     
-    
-    public static Character stock(){
-        Scanner scanner = new Scanner(System.in);
+    public static List<Character> stock(){
         
         String name1 = "knight";int vie1 = 100;int Damage1 = 20;
         String name2 = "mage";int vie2 = 100; int Damage2 = 20;
@@ -27,7 +26,13 @@ public class Main {
         party.add(monster);
         party.add(elf);
         
-        int i = 0;
+        return party;
+    }
+    
+    public static Character choose(List<Character> party){
+        Scanner scanner = new Scanner(System.in);
+        
+        int i;
         Character persoChoisi = null;
         do{
             i=0;
@@ -41,12 +46,17 @@ public class Main {
             String choice1 = scanner.nextLine();
             for (Character perso : party){
                 if (perso.getName().equals(choice1)){
+                   if (!perso.isAlive()){
+                       System.out.printf("%s is dead, choose another\n", perso.getName() );
+                       break;
+                   }
                     System.out.println("you have chosen "+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
                     persoChoisi = perso;
                     break;
                 }
                 i++;
             }
+            
             if (i == party.size()) System.out.println("->Invalid choice");
         }while(i == party.size());
         return persoChoisi;
@@ -70,10 +80,11 @@ public class Main {
                 case 1 -> {selected.attack(opponent);break;}
                 case 2 -> {selected.heal();break;}
                 case 3 -> {if(selected instanceof SpecialAbility ability) ability.use(opponent);break;}
-                case 4 -> {stock();}
+                case 4 -> {selected = choose(stock());break;}
             
                 default -> {System.out.println("Invalid choice");break;}
-            } 
+            }
+            
         }while (0>choice || choice>3);
     }
     
@@ -83,11 +94,11 @@ public class Main {
         
         Random random = new Random();
         Scanner scanner =new Scanner(System.in);
+        
         System.out.println("/////  BOSS  FIGHT  \\\\\\\\");
-        Character selected = stock();
+        Character selected = choose(stock());
+        List<Character> party = stock();
         Character opponent = new Boss("UNDEAD", 300, 50);
-
-    
 
 
         
@@ -105,8 +116,26 @@ public class Main {
         System.out.println("\nyou deliver the first strike");
         System.out.println("----------------------------");
         while (selected.isAlive() || opponent.isAlive()){ 
-            if (selected.isAlive())playerTurn(selected,opponent);
-            else System.out.println("******** YOU LOST ********");
+            if (selected.isAlive())
+            {   
+                for(Character loop : party){
+                    if (selected.getName().equals(loop.getName())){
+                        loop.setVie(selected.getVie());
+                        break;}
+                }
+                playerTurn(selected,opponent);
+            }
+            else {
+                for( Character loop : party){
+                    if (loop.getVie() > 0){
+                        selected = choose(party);
+                        break;}
+                    else 
+                    {System.out.println("******* YOU LOST *******");
+                    break;}
+                    
+                }   
+            }
             
             if (opponent.isAlive()){
                 if (random.nextInt(100)>10 && random.nextInt(100)<30 ){
@@ -116,13 +145,12 @@ public class Main {
                         ability.use(selected);
                     else{opponent.attack(selected);}
             }
+            
             else{
-                System.out.printf("******** YOU  WON ********");
+                System.out.printf("******** CONGRATULATIONS YOU WON ********");
                 break;
             }
-            
         }   
-        
     }
 }
 
