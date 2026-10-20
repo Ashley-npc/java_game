@@ -125,17 +125,29 @@ public class Main {
                 }
                 playerTurn(selected,opponent);
             }
+            
             else {
+                for (Character loop : party){
+                    if (loop.getName().equals(selected.getName())) loop.setVie(selected.getVie());
+                }
+                int i = 0;
                 for( Character loop : party){
+                    i++;
                     if (loop.getVie() > 0){
-                        selected = choose(party);
-                        break;}
-                    else 
-                    {System.out.println("******* YOU LOST *******");
-                    break;}
-                    
-                }   
+                        do{
+                            selected = choose(party);
+                        }while(selected.getVie() == 0);
+                        break;
+                    }
+                    else if (i == party.size()){
+                    System.out.println("*****YOU LOST******");
+                    System.out.println("all your fightes are down");
+                    return;
+                    }
+                
+                }
             }
+        
             
             if (opponent.isAlive()){
                 if (random.nextInt(100)>10 && random.nextInt(100)<30 ){
@@ -148,7 +160,7 @@ public class Main {
             
             else{
                 System.out.printf("******** CONGRATULATIONS YOU WON ********");
-                break;
+                return;
             }
         }   
     }

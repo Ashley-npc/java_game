@@ -37,9 +37,11 @@ public class Character {
     
     void attack (Character Target){
         int ATK = random.nextInt(getDamage());
-        System.out.printf("%s(%dhp) attacks %s(%dhp)\n", name, vie, Target.getName(),Target.getVie());
+        System.out.printf("%s(%dhp) attacks %s(%dhp)\n", name, vie, Target.getName(),Target.getVie()); 
+        if (ATK > Target.getVie())System.out.println(Target.name+" loses "+ Target.getVie()+"hp \n\n");
+        else System.out.println(Target.name+" loses "+ ATK+"hp \n\n");
         Target.vie = Math.max(0, Target.vie - ATK);
-        System.out.println(Target.name+" loses "+ ATK+"hp \n\n");
+       
     }
     
     public boolean isAlive(){
