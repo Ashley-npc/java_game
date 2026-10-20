@@ -71,7 +71,7 @@ class Warrior extends Character implements SpecialAbility{
     public void use (Character Target){
         int loss;
         System.out.printf("HEAVY ATTACK! on %s\n",Target.getName());
-        if(Target.getVie()<30) {loss = 100 - (100 - 30);}
+        if(Target.getVie()<30) {loss = Target.getVie();}
         else {loss = 30;}
         heavyAttack(Target); 
         System.out.printf("%s loses %dhp\n\n", Target.getName(),loss);
@@ -91,8 +91,8 @@ class Mage extends Character implements SpecialAbility{
     public void use(Character Target){
         int loss;
         System.out.printf("HEAVY ATTACK! on %s\n",Target.getName());
-        if(Target.getVie()<25) {loss = 100 - (100 - Target.getVie());}
-        else {loss = Target.getVie() - 25;}
+        if(Target.getVie()<25) {loss =Target.getVie();}
+        else {loss = 25;}
         Fireball(Target);
         System.out.printf("%s loses %dhp\n\n", Target.getName(),loss);
     }
@@ -112,8 +112,8 @@ class Monster extends Character implements SpecialAbility{
     public void use(Character Target){
         int loss;
         System.out.printf("HEAVY ATTACK! on %s\n",Target.getName());
-        if(Target.getVie()<25) {loss = 100 - (100 - Target.getVie());}
-        else {loss = Target.getVie() - 25;}
+        if(Target.getVie()<20) {loss = Target.getVie();}
+        else {loss = 20;}
         ATTACK(Target);
         System.out.printf("%s loses %dhp\n\n", Target.getName(),loss);
     }
