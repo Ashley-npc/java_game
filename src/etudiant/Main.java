@@ -8,6 +8,38 @@ import java.util.List;
 
 public class Main {
     
+    public static List<Character> team(List<Character> fighters){
+        Scanner scanner = new Scanner(System.in);
+        int i= 0;
+        
+        System.out.println("Choose your team fighters");
+        System.out.println("----------------");
+        for (Character loop : fighters){
+            i++;
+            System.out.println(i+"- "+loop.getName()+" " + loop.getVie()+"hp " + loop.getDamage()+"DMG");
+        }
+        
+        List<Character> Myteam = new ArrayList<>();
+        
+        int j=1;
+        for (i = 0; i < fighters.size(); i++) {
+            int choice1 = scanner.nextInt();
+            if (choice1 == i+1 && j <= 2){
+                Myteam.add(fighters.get(choice1));
+                j++;
+            }
+        }
+        
+        System.out.println("Your team");
+        System.out.println("---------");
+        for (Character loop : fighters){
+            System.out.println(j+"- "+ loop.getName());
+            j++;
+        }
+        return Myteam;
+        
+    }
+    
     public static List<Character> stock(){
         
         String name1 = "knight";int vie1 = 100;int Damage1 = 20;
@@ -50,7 +82,7 @@ public class Main {
                        System.out.printf("%s is dead, choose another\n", perso.getName() );
                    }
                     else {
-                        System.out.println("you have chosen "+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
+                        System.out.println("you have chosen \n"+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
                         persoChoisi = perso;
                         break;}
                 }
@@ -96,8 +128,13 @@ public class Main {
         Scanner scanner =new Scanner(System.in);
         
         System.out.println("/////  BOSS  FIGHT  \\\\\\\\");
-        Character selected = choose(stock());
+        //Character selected = choose(stock());
         List<Character> party = stock();
+        List<Character> fighters = party;
+        team(fighters);
+    }
+}        
+        /*
         Character opponent = new Boss("UNDEAD", 300, 50);
 
         System.out.println("\nyou deliver the first strike");
@@ -154,5 +191,5 @@ public class Main {
     }
 }
 
-
+*/
 
