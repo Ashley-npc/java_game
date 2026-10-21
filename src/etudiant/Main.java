@@ -48,11 +48,11 @@ public class Main {
                 if (perso.getName().equals(choice1)){
                    if (!perso.isAlive()){
                        System.out.printf("%s is dead, choose another\n", perso.getName() );
-                       break;
                    }
-                    System.out.println("you have chosen "+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
-                    persoChoisi = perso;
-                    break;
+                    else {
+                        System.out.println("you have chosen "+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
+                        persoChoisi = perso;
+                        break;}
                 }
                 i++;
             }
@@ -100,19 +100,6 @@ public class Main {
         List<Character> party = stock();
         Character opponent = new Boss("UNDEAD", 300, 50);
 
-
-        
-        /*System.out.println("\nChoose an oppoenent");
-        System.out.println("-------------------");
-        for (String name : characters.keySet()){
-            if (!name.equals(choice1))
-                System.out.println(name);
-        }
-        String choice2 = scanner.nextLine();
-        
-        Character opponent = characters.get(choice2);
-        Character selected = characters.get(choice1);
-        */
         System.out.println("\nyou deliver the first strike");
         System.out.println("----------------------------");
         while (selected.isAlive() || opponent.isAlive()){ 
@@ -127,6 +114,7 @@ public class Main {
             }
             
             else {
+                System.out.println("//"+selected.getName()+" died \\");
                 for (Character loop : party){
                     if (loop.getName().equals(selected.getName())) loop.setVie(selected.getVie());
                 }
@@ -134,7 +122,7 @@ public class Main {
                 for( Character loop : party){
                     i++;
                     if (loop.getVie() > 0){
-                        do{
+                        do{     
                             selected = choose(party);
                         }while(selected.getVie() == 0);
                         break;
