@@ -148,9 +148,14 @@ public class Main {
         for(Character loop : opponent){
             System.out.println(loop.getName());
         }
-    }
-}        
         
+        
+        
+    }
+    
+}        
+        //CODE BELOW FROM HERE STILL IN DEVELOPPMENT DO NOT TOUCH
+
         //Character opponent = new Boss("UNDEAD", 300, 50);
 
         /*System.out.println("\nyou deliver the first strike");
