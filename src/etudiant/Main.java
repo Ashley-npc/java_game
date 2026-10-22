@@ -20,24 +20,27 @@ public class Main {
         }
         
         List<Character> Myteam = new ArrayList<>();
-        
         int j=1;
-        for (i = 0; i < fighters.size(); i++) {
-            int choice1 = scanner.nextInt();
-            if (choice1 == i+1 && j <= 2){
-                Myteam.add(fighters.get(choice1));
-                j++;
-            }
-        }
         
+        int k;
+        
+        do{
+            int choice1 = scanner.nextInt();
+            for (i = 0; i < fighters.size() && j <= 2; i++) {
+                if ((i+1 == choice1)){
+                    Myteam.add(fighters.get(i));
+                    j++;
+                    }
+                }
+        }while(j<=2);   
         System.out.println("Your team");
         System.out.println("---------");
-        for (Character loop : fighters){
+        j=1;
+        for (Character loop : Myteam){
             System.out.println(j+"- "+ loop.getName());
             j++;
         }
-        return Myteam;
-        
+        return Myteam;    
     }
     
     public static List<Character> stock(){
@@ -120,14 +123,12 @@ public class Main {
         }while (0>choice || choice>3);
     }
     
-    
-    
     public static void main (String[] args){
         
         Random random = new Random();
         Scanner scanner =new Scanner(System.in);
         
-        System.out.println("/////  BOSS  FIGHT  \\\\\\\\");
+        System.out.println("/////  BOSS  FIGHT  \\\\\\");
         //Character selected = choose(stock());
         List<Character> party = stock();
         List<Character> fighters = party;
