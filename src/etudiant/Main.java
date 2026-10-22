@@ -132,13 +132,28 @@ public class Main {
         //Character selected = choose(stock());
         List<Character> party = stock();
         List<Character> fighters = party;
-        team(fighters);
+        List<Character> Myteam = team(fighters);
+        List<Character> opponent= new ArrayList<>();
+        
+        System.out.println("Your opponents's team: ");
+        for(Character loop : Myteam){
+            for(Character loop2 : fighters){
+                if(loop.getName().equals(loop2.getName()) ){
+                    fighters.remove(loop2);
+                    break;
+                }
+            }
+        }
+        opponent = fighters;
+        for(Character loop : opponent){
+            System.out.println(loop.getName());
+        }
     }
 }        
-        /*
-        Character opponent = new Boss("UNDEAD", 300, 50);
+        
+        //Character opponent = new Boss("UNDEAD", 300, 50);
 
-        System.out.println("\nyou deliver the first strike");
+        /*System.out.println("\nyou deliver the first strike");
         System.out.println("----------------------------");
         while (selected.isAlive() || opponent.isAlive()){ 
             if (selected.isAlive())
