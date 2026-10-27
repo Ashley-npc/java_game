@@ -212,7 +212,9 @@ public class Main {
                         opponent = loop;
                         break;
                     }
+                    o++;
                 }
+                System.out.println("Congrats You Won");
             }
             else{
                 int action = random.nextInt(100)+1;
