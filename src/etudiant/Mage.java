@@ -2,7 +2,7 @@
 package etudiant;
 
 class Mage extends Character implements SpecialAbility{
-    void Fireball(Character Target){
+    void heavyAttack(Character Target){
         Target.setVie(Math.max(0, Target.getVie()-25));
     }
     
@@ -16,7 +16,7 @@ class Mage extends Character implements SpecialAbility{
         System.out.printf("HEAVY ATTACK! on %s\n",Target.getName());
         if(Target.getVie()<25) {loss =Target.getVie();}
         else {loss = 25;}
-        Fireball(Target);
+        heavyAttack(Target);
         System.out.printf("%s loses %dhp\n\n", Target.getName(),loss);
     }
     

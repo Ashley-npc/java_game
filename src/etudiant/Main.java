@@ -163,16 +163,31 @@ public class Main {
         System.out.println("\nyou deliver the first strike");
         System.out.println("----------------------------");
         int i = 1;
-        int choice1;
+        int choice1 = -1;
+        int j=0;
+        int o = 1;
+        Character opponent =  opponenT.get(random.nextInt(opponenT.size()+1));
         do{
             
             show(Myteam);
             
-            if(i < Myteam.size()) 
-                choice1 = scanner.nextInt(); 
-            else 
-                
             
+            if(i < Myteam.size()) {
+                j=0;
+                choice1 = scanner.nextInt(); 
+            }    
+            else{
+                for(Character loop: Myteam){
+                    if (loop.getVie()>0){
+                        choice1 = j;
+                        break;
+                    }
+                    else{
+                        System.out.println("All your fighters are down");
+                    }
+                    j++;    
+                }
+            }
             
             if(Myteam.get(choice1).isAlive()){
                 for(Character loop : Myteam){
@@ -188,10 +203,25 @@ public class Main {
                 
             }
                 
-            Character opponent =  opponenT.get(random.nextInt(opponenT.size()+1));
             playerTurn(Myteam.get(choice1),opponent);
             
-        }while(1<0);
+            if(opponent.getVie()<=0){
+                
+                for(Character loop : opponenT){
+                    if(loop.getVie() >= 0){
+                        opponent = loop;
+                        break;
+                    }
+                }
+            }
+            else{
+                int action = random.nextInt(100)+1;
+                if (action <= 10 && opponent instanceof SpecialAbility ability) ability.use(Myteam.get(choice1));
+                else if (action > 10 && action <= 30) opponent.heal();
+                else opponent.attack(Myteam.get(choice1));
+            }
+            
+        }while(j < Myteam.size() || o < opponenT.size());
         
         /*while (selected.isAlive() || opponent.isAlive()){ 
             if (selected.isAlive())

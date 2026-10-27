@@ -2,7 +2,7 @@
 package etudiant;
 
 class Monster extends Character implements SpecialAbility{
-    void ATTACK (Character Target){
+    void heavyAttack (Character Target){
         Target.setVie(Math.max(0, Target.getVie()-20));
     }
     
@@ -16,7 +16,7 @@ class Monster extends Character implements SpecialAbility{
         System.out.printf("HEAVY ATTACK! on %s\n",Target.getName());
         if(Target.getVie()<20) {loss = Target.getVie();}
         else {loss = 20;}
-        ATTACK(Target);
+        heavyAttack(Target);
         System.out.printf("%s loses %dhp\n\n", Target.getName(),loss);
     }
     
