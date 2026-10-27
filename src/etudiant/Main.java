@@ -123,6 +123,14 @@ public class Main {
         }while (0>choice || choice>3);
     }
     
+    public static void show(List<Character> Team){
+        int i =1;
+        for ( Character loop: Team){
+            System.out.println(i+"- "+loop.getName()+" " + loop.getVie()+"hp " + loop.getDamage()+"DMG");
+            i++;
+        }
+    }
+    
     public static void main (String[] args){
         
         Random random = new Random();
@@ -133,7 +141,7 @@ public class Main {
         List<Character> party = stock();
         List<Character> fighters = party;
         List<Character> Myteam = team(fighters);
-        List<Character> opponent= new ArrayList<>();
+        List<Character> opponenT= new ArrayList<>();
         
         System.out.println("Your opponents's team: ");
         for(Character loop : Myteam){
@@ -144,23 +152,48 @@ public class Main {
                 }
             }
         }
-        opponent = fighters;
-        for(Character loop : opponent){
+        opponenT = fighters;
+        for(Character loop : opponenT){
             System.out.println(loop.getName());
         }
         
         
-        
-    }
     
-}        
-        //CODE BELOW FROM HERE STILL IN DEVELOPPMENT DO NOT TOUCH
-
-        //Character opponent = new Boss("UNDEAD", 300, 50);
-
-        /*System.out.println("\nyou deliver the first strike");
+        
+        System.out.println("\nyou deliver the first strike");
         System.out.println("----------------------------");
-        while (selected.isAlive() || opponent.isAlive()){ 
+        int i = 1;
+        int choice1;
+        do{
+            
+            show(Myteam);
+            
+            if(i < Myteam.size()) 
+                choice1 = scanner.nextInt(); 
+            else 
+                
+            
+            
+            if(Myteam.get(choice1).isAlive()){
+                for(Character loop : Myteam){
+                    if (Myteam.get(choice1).getName().equals(loop.getName())){
+                        loop.setVie(Myteam.get(choice1).getVie());
+                        break;}
+                }
+            }
+            else{
+                System.out.println(Myteam.get(choice1).getName()+" is down");
+                Myteam.get(choice1).setVie(Myteam.get(choice1).getVie());
+                i++;
+                
+            }
+                
+            Character opponent =  opponenT.get(random.nextInt(opponenT.size()+1));
+            playerTurn(Myteam.get(choice1),opponent);
+            
+        }while(1<0);
+        
+        /*while (selected.isAlive() || opponent.isAlive()){ 
             if (selected.isAlive())
             {   
                 for(Character loop : party){
@@ -208,9 +241,8 @@ public class Main {
                 System.out.printf("******** CONGRATULATIONS YOU WON ********");
                 return;
             }
-        }   
+        }*/   
     }
 }
 
-*/
 
