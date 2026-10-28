@@ -66,35 +66,29 @@ public class Main {
     
     public static Character choose(List<Character> party){
         Scanner scanner = new Scanner(System.in);
+        int i =0;
+        int j = 1;
+        int choice = -1;
+        Character selected = null;
         
-        int i;
-        Character persoChoisi = null;
-        do{
-            i=0;
-            System.out.println("Choose a character");
-            System.out.println("------------------");
-            for (Character perso : party){
-                System.out.println("-"+perso.getName()+"  "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
+        do{ 
             
+            for (Character perso : party){
+                System.out.println(j+"- "+perso.getName()+"  "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
+                j++;
             }
             
-            String choice1 = scanner.nextLine();
+            
             for (Character perso : party){
-                if (perso.getName().equals(choice1)){
-                   if (!perso.isAlive()){
-                       System.out.printf("%s is dead, choose another\n", perso.getName() );
-                   }
-                    else {
-                        System.out.println("you have chosen \n"+perso.getName()+" "+ perso.getVie()+"hp  "+ perso.getDamage()+"DMG");
-                        persoChoisi = perso;
-                        break;}
+                if (perso == party.get(choice)){
+                   selected = perso;
                 }
                 i++;
             }
-            
+                
             if (i == party.size()) System.out.println("->Invalid choice");
         }while(i == party.size());
-        return persoChoisi;
+        return selected;
     }
     
     
@@ -107,7 +101,7 @@ public class Main {
             System.out.println("1. Attack");
             System.out.println("2. Heal");
             System.out.println("3. Heavy attack(usable only once)");
-            System.out.println("4. Switch character");
+            System.out.println("4. Quit");
         
         
             choice = scanner.nextInt();
@@ -115,7 +109,7 @@ public class Main {
                 case 1 -> {selected.attack(opponent);break;}
                 case 2 -> {selected.heal();break;}
                 case 3 -> {if(selected instanceof SpecialAbility ability) ability.use(opponent);break;}
-                case 4 -> {selected = choose(stock());break;}
+                case 4 -> {return;}
             
                 default -> {System.out.println("Invalid choice");break;}
             }
@@ -136,7 +130,7 @@ public class Main {
         Random random = new Random();
         Scanner scanner =new Scanner(System.in);
         
-        System.out.println("/////  BOSS  FIGHT  \\\\\\");
+        //System.out.println("/////  BOSS  FIGHT  \\\\\\");
         //Character selected = choose(stock());
         List<Character> party = stock();
         List<Character> fighters = party;
@@ -166,44 +160,48 @@ public class Main {
         int choice1 = -1;
         int j=0;
         int o = 1;
-        Character opponent =  opponenT.get(random.nextInt(opponenT.size()+1));
+        
+        
         do{
-            
             show(Myteam);
-            
+            Character opponent =  opponenT.get(random.nextInt(opponenT.size()));
+            Character selected = null;
             
             if(i < Myteam.size()) {
                 j=0;
-                choice1 = scanner.nextInt(); 
-            }    
+                choice1 = scanner.nextInt();
+                selected = Myteam.get(choice1-1) ;
+            }   
+            
             else{
                 for(Character loop: Myteam){
                     if (loop.getVie()>0){
-                        choice1 = j;
+                        selected = Myteam.get(j);
                         break;
                     }
-                    else{
+                    else if (j++ == Myteam.size()){
                         System.out.println("All your fighters are down");
+                        break;
                     }
                     j++;    
                 }
             }
             
-            if(Myteam.get(choice1).isAlive()){
+            if(selected.isAlive()){
                 for(Character loop : Myteam){
-                    if (Myteam.get(choice1).getName().equals(loop.getName())){
-                        loop.setVie(Myteam.get(choice1).getVie());
+                    if (selected.getName().equals(loop.getName())){
+                        loop.setVie(selected.getVie());
                         break;}
                 }
             }
             else{
-                System.out.println(Myteam.get(choice1).getName()+" is down");
-                Myteam.get(choice1).setVie(Myteam.get(choice1).getVie());
+                System.out.println(selected.getName()+" is down");
+                selected.setVie(selected.getVie());
                 i++;
                 
             }
                 
-            playerTurn(Myteam.get(choice1),opponent);
+            playerTurn(selected,opponenT.get(random.nextInt(2)));
             
             if(opponent.getVie()<=0){
                 
@@ -218,9 +216,9 @@ public class Main {
             }
             else{
                 int action = random.nextInt(100)+1;
-                if (action <= 10 && opponent instanceof SpecialAbility ability) ability.use(Myteam.get(choice1));
+                if (action <= 10 && opponent instanceof SpecialAbility ability) ability.use(Myteam.get(random.nextInt(2)));
                 else if (action > 10 && action <= 30) opponent.heal();
-                else opponent.attack(Myteam.get(choice1));
+                else opponent.attack(Myteam.get(random.nextInt(2)));
             }
             
         }while(j < Myteam.size() || o < opponenT.size());
